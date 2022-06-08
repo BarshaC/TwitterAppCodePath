@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,9 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,13 +51,30 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(adapter);
         logout = findViewById(R.id.logOutbtn);
         populateHomeTimeline();
-        logout.setOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        FloatingActionButton composebtn = findViewById(R.id.compose);
+        composebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(TimelineActivity.this, "Compose tweet!",Toast.LENGTH_SHORT).show();
+                Intent i =  new Intent(TimelineActivity.this,ComposeActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+                logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onLogoutButton();
             }
         });
     }
+
+
+
+
 
     private void populateHomeTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
