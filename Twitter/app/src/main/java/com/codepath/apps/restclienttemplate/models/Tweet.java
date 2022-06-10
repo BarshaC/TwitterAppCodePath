@@ -20,6 +20,11 @@ public class Tweet {
     public String createdAt;
     public User user;
     public String bodyImage;
+    public boolean isFavorited;
+    public boolean isRetweeted;
+    public int favoriteCount;
+    public int retweetCount;
+    public String id;
     public Tweet(){} //Empty constructor for the parcel
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -28,7 +33,15 @@ public class Tweet {
 
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
+        if (jsonObject.has("retweeted_status")) {
+            return null;
+        }
         Tweet tweet = new Tweet();
+        tweet.isFavorited = jsonObject.getBoolean("favorited");
+        tweet.isRetweeted= jsonObject.getBoolean("retweeted");
+        tweet.favoriteCount = jsonObject.getInt("favorite_count");
+        tweet.retweetCount = jsonObject.getInt("retweet_count");
+        tweet.id = jsonObject.getString("id_str");
         //tweet.body = jsonObject.getString("text");
         if(jsonObject.has("full_text")) {
             tweet.body = jsonObject.getString("full_text");
@@ -43,14 +56,17 @@ public class Tweet {
             tweet.bodyImage = "null";
         }
 
+
         return tweet;
     }
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
-        List <Tweet> tweets = new ArrayList<>();
+        List<Tweet> tweets = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            tweets.add(Tweet.fromJson(jsonArray.getJSONObject(i)));
-        }
-        return tweets;
+            Tweet newTweet = fromJson(jsonArray.getJSONObject(i));
+            if (newTweet != null) {
+                tweets.add(newTweet);
+            }
+        }return tweets;
     }
 
     public String getRelativeTimeAgo(String rawJsonDate) {
