@@ -5,6 +5,7 @@ import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -59,6 +60,9 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
         TextView tvScreenName;
         TextView timeAgo;
         ImageView imageContent;
+        TextView tvFavorite;
+        ImageButton ibFavorite;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +71,9 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             timeAgo = itemView.findViewById(R.id.timeAgo);
             imageContent = itemView.findViewById(R.id.imageContent);
+            tvFavorite = itemView.findViewById(R.id.tvFavoriteCount);
+            ibFavorite = itemView.findViewById(R.id.ibFavorite);
+
         }
 
         public void bind(Tweet tweet) {
@@ -80,6 +87,20 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
                 imageContent.setVisibility(View.VISIBLE);
                 Glide.with(context).load(tweet.bodyImage).into(imageContent);
             }
+            ibFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //if not already favorited
+                    //tell Twitter i want to favorite this
+                    //change the drawable to btn_star_big_on
+                    //change the text inside tvFavoriteCount
+
+                    // Else if already favorited
+                        //tell twitter to favorite it
+                        // change the drawable back to btn star_big_off
+                        //decrement the text inside tvFavoriteCount
+                }
+            });
 
         }
 
