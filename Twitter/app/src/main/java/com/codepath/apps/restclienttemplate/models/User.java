@@ -13,7 +13,8 @@ public class User {
     public String name;
     public String screenName; //handle
     public String profileImageUrl;
-    public String tvScreenName;
+    //public String tvScreenName;
+    public String timeAgo;
     public User() {}
 
     public static User fromJson(JSONObject jsonObject) throws JSONException {

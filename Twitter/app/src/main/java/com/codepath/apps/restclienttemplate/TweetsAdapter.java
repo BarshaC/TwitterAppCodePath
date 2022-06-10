@@ -33,7 +33,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
         return new ViewHolder(view);
     }
 
@@ -57,20 +57,41 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
         ImageView ivProfileImage;
         TextView tvBody;
         TextView tvScreenName;
+        TextView timeAgo;
+        ImageView imageContent;
 
-        public ViewHolder (@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            timeAgo = itemView.findViewById(R.id.timeAgo);
+            imageContent = itemView.findViewById(R.id.imageContent);
         }
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
-            tvScreenName.setText(tweet.user.tvScreenName);
+            tvScreenName.setText(tweet.user.screenName);
+            timeAgo.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            if (tweet.bodyImage.equals("null")) {
+                imageContent.setVisibility(View.GONE);
+            } else {
+                imageContent.setVisibility(View.VISIBLE);
+                Glide.with(context).load(tweet.bodyImage).into(imageContent);
+            }
 
+        }
 
+        public void clear() {
+            tweets.clear();
+            notifyDataSetChanged();
+
+        }
+
+        public void addAll(List<Tweet> list) {
+            tweets.addAll(list);
+            notifyDataSetChanged();
         }
     }
 }
