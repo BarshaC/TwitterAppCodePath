@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.jetbrains.annotations.NonNls;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -67,6 +70,8 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
         ImageView imageContent;
         TextView tvFavorite;
         ImageButton ibFavorite;
+        ImageButton ibReply;
+
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -78,6 +83,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
             imageContent = itemView.findViewById(R.id.imageContent);
             tvFavorite = itemView.findViewById(R.id.tvFavoriteCount);
             ibFavorite = itemView.findViewById(R.id.ibFavorite);
+            ibReply = itemView.findViewById(R.id.ibReply);
 
         }
 
@@ -86,10 +92,10 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
             tvScreenName.setText(tweet.user.screenName);
             tvFavorite.setText(String.valueOf(tweet.favoriteCount));
             if (tweet.isFavorited){
-                Drawable newimage = context.getDrawable(android.R.drawable.btn_star_big_on);
+                Drawable newimage = context.getDrawable(R.drawable.ic_vector_heart);
                 ibFavorite.setImageDrawable(newimage);
             }else{
-                Drawable newimage = context.getDrawable(android.R.drawable.btn_star_big_off);
+                Drawable newimage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
                 ibFavorite.setImageDrawable(newimage);
 
             }
@@ -118,7 +124,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
                             }
                         });
                         tweet.isFavorited = true;
-                        Drawable newimage = context.getDrawable(android.R.drawable.btn_star_big_on);
+                        Drawable newimage = context.getDrawable(R.drawable.ic_vector_heart);
                         ibFavorite.setImageDrawable(newimage);
                         tweet.favoriteCount++;
                         tvFavorite.setText(String.valueOf(tweet.favoriteCount));
@@ -136,7 +142,8 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
                                 Log.i("adapter", "This should've been unfavorited. Go Check");
                             }
                             });
-                        Drawable newimage = context.getDrawable(android.R.drawable.btn_star_big_off);
+
+                        Drawable newimage = context.getDrawable(R.drawable.ic_vector_heart_stroke);
                         ibFavorite.setImageDrawable(newimage);
                         tweet.favoriteCount--;
                         tvFavorite.setText(String.valueOf(tweet.favoriteCount));
@@ -145,6 +152,14 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
                     }
 
                     }
+            });
+            ibReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent (context, ComposeActivity.class);
+                    i.putExtra("tweet_to_reply_to", Parcels.wrap(tweet));
+                    ((Activity)context).startActivityForResult(i,TimelineActivity.REQUEST_CODE);
+                }
             });
 
         }

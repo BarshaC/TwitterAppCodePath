@@ -25,6 +25,29 @@ public class ComposeActivity extends AppCompatActivity {
     EditText etCompose;
     Button btnTweet;
     TwitterClient client;
+    JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+        @Override
+        public void onSuccess(int statusCode, Headers headers, JSON json) {
+            Log.e(TAG,"onSuccess to publish tweet!");
+            try {
+                Tweet tweet = Tweet.fromJson(json.jsonObject);
+                Log.i(TAG,"Tweet published" + tweet);
+                Intent intent = new Intent();
+                intent.putExtra("tweet", Parcels.wrap(tweet));
+                setResult(RESULT_OK,intent);
+                finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+            Log.e(TAG,"onFailure to publish: "+response,throwable);
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,45 +63,25 @@ public class ComposeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String tweetContent = etCompose.getText().toString();
                 if (tweetContent.isEmpty()) {
-                    Toast.makeText(ComposeActivity.this,"Sorry your tweets cannot be empty",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ComposeActivity.this, "Sorry your tweets cannot be empty", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (tweetContent.length() > MAX_TWEET_LENGTH ){
-                    Toast.makeText(ComposeActivity.this,"Sorry your tweet is too long",Toast.LENGTH_LONG).show();
+                if (tweetContent.length() > MAX_TWEET_LENGTH) {
+                    Toast.makeText(ComposeActivity.this, "Sorry your tweet is too long", Toast.LENGTH_LONG).show();
                     return;
 
                 }
-                Toast.makeText(ComposeActivity.this,tweetContent,Toast.LENGTH_LONG).show();
-                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Headers headers, JSON json) {
-                        Log.e(TAG,"onSuccess to publish tweet!");
-                        try {
-                            Tweet tweet = Tweet.fromJson(json.jsonObject);
-                            Log.i(TAG,"Tweet published" + tweet);
-                            Intent intent = new Intent();
-                            intent.putExtra("tweet", Parcels.wrap(tweet));
-                            setResult(RESULT_OK,intent);
-                            finish();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
 
-/*                        Intent intent = new Intent();
-                        finish();*/
-
-
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                        Log.e(TAG,"onFailure to publish: "+response,throwable);
-
-                    }
-                });
-
+                if (getIntent().hasExtra("tweet_to_reply_to")) {
+                    Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet_to_reply_to"));
+                    String idOfTweetReplyTo = tweet.id;
+                    String screenname = tweet.user.screenName;
+                    client.replyToTweet(idOfTweetReplyTo, "@"+screenname + " " + tweetContent, handler);
+                } else {
+                    client.publishTweet(tweetContent, handler);
+                }
             }
-        });
-        //make an api call to Twitter
-    }
+    });
+}
 }
