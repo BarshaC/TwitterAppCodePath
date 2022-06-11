@@ -65,12 +65,13 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
 
         ImageView ivProfileImage;
         TextView tvBody;
-        TextView tvScreenName;
+        TextView screenName;
         TextView timeAgo;
         ImageView imageContent;
         TextView tvFavorite;
         ImageButton ibFavorite;
         ImageButton ibReply;
+        ImageButton getIbReply;
 
 
 
@@ -78,7 +79,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
-            tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            screenName = itemView.findViewById(R.id.screenName);
             timeAgo = itemView.findViewById(R.id.timeAgo);
             imageContent = itemView.findViewById(R.id.imageContent);
             tvFavorite = itemView.findViewById(R.id.tvFavoriteCount);
@@ -89,7 +90,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
 
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
-            tvScreenName.setText(tweet.user.screenName);
+            screenName.setText(tweet.user.screenName);
             tvFavorite.setText(String.valueOf(tweet.favoriteCount));
             if (tweet.isFavorited){
                 Drawable newimage = context.getDrawable(R.drawable.ic_vector_heart);
@@ -147,8 +148,6 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
                         ibFavorite.setImageDrawable(newimage);
                         tweet.favoriteCount--;
                         tvFavorite.setText(String.valueOf(tweet.favoriteCount));
-
-
                     }
 
                     }
@@ -167,9 +166,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
         public void clear() {
             tweets.clear();
             notifyDataSetChanged();
-
         }
-
         public void addAll(List<Tweet> list) {
             tweets.addAll(list);
             notifyDataSetChanged();

@@ -16,11 +16,12 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvScreenName"
+        android:id="@+id/screenName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="8dp"
         android:text="Barsha123"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
-        app:layout_constraintTop_toBottomOf="@+id/tvScreenName" />
+        app:layout_constraintTop_toBottomOf="@+id/screenName" />
 
     <TextView
         android:id="@+id/timeAgo"
@@ -71,24 +72,40 @@
 
     <ImageButton
         android:id="@+id/ibFavorite"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="26dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintHorizontal_bias="0.197"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageContent"
         app:srcCompat="@drawable/ic_vector_heart_stroke" />
 
     <ImageButton
         android:id="@+id/ibReply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="212dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="46dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="204dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageContent"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/vector_compose_dm_shortcut" />
+
+    <ImageButton
+        android:id="@+id/ibRetweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="112dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageContent"
+        app:srcCompat="@drawable/ic_vector_retweet" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="229dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibFavorite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

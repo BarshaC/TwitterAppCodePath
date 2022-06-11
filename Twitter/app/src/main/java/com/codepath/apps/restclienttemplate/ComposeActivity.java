@@ -77,7 +77,7 @@ public class ComposeActivity extends AppCompatActivity {
                     Tweet tweet = Parcels.unwrap(getIntent().getParcelableExtra("tweet_to_reply_to"));
                     String idOfTweetReplyTo = tweet.id;
                     String screenname = tweet.user.screenName;
-                    client.replyToTweet(idOfTweetReplyTo, "@"+screenname + " " + tweetContent, handler);
+                    client.replyToTweet(idOfTweetReplyTo, "@"+ screenname + " " + tweetContent, handler);
                 } else {
                     client.publishTweet(tweetContent, handler);
                 }

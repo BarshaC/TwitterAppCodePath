@@ -6,7 +6,7 @@
 
     <Button
         android:id="@+id/logOutbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
         android:text="Logout" />
 </LinearLayout>
