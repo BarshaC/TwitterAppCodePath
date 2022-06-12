@@ -26,7 +26,6 @@ public class User {
         user.name = jsonObject.getString("name");
         user.screenName = jsonObject.getString("screen_name");
         user.profileImageUrl = jsonObject.getString("profile_image_url_https");
-        //user.profileBannerImageUrl = jsonObject.getString("profile_banner_url");
         user.followerCount = jsonObject.getInt("followers_count");
         user.followingCount = jsonObject.getInt("friends_count");
         user.tvDescription = jsonObject.getString("description");

@@ -20,7 +20,6 @@ public class SampleModel {
 
 	@PrimaryKey(autoGenerate = true)
 	Long id;
-
 	// Define table fields
 	@ColumnInfo
 	private String name;
@@ -28,7 +27,6 @@ public class SampleModel {
 	public SampleModel() {
 		super();
 	}
-
 	// Parse model from JSON
 	public SampleModel(JSONObject object){
 		super();

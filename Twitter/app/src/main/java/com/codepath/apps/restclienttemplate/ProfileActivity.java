@@ -24,5 +24,5 @@ public class ProfileActivity extends AppCompatActivity {
         TextView tvFollowingCount  = findViewById(R.id.tvFollowingCount);
         TextView tvDescription  = findViewById(R.id.tvDescription);
     }
-    //Intent i  = new Intent(this).load(user.profileImageUrl).into(ivProfileImage);
+    //Still working on this optional feature where the user can click on th image of user and go to user profile
 }

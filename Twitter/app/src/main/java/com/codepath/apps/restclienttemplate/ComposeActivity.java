@@ -56,7 +56,6 @@ public class ComposeActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
-
         //Set clickListener on the button
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override

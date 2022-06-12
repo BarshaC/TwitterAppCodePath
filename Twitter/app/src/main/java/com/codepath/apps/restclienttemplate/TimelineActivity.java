@@ -43,20 +43,17 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer = findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
+                // Your code to refresh the list here
                 fetchTimelineAsync(0);
             }
         });
         client = TwitterApp.getRestClient(this);
         //find recycler view
         rvTweets = findViewById(R.id.rvTweets);
-
         //Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
@@ -85,14 +82,10 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void fetchTimelineAsync(int page) {
-        // Send the network request to fetch the updated data
-        // `client` here is an instance of Android Async HTTP
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                // Remember to CLEAR OUT old items before appending in the new ones
-                //adapter.clear();
-                // ...the data has come back, add new items to your adapter...
+                // when the data has come back, add new items to your adapter...
                 populateHomeTimeline();
                 // Now we call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);
@@ -110,8 +103,6 @@ public class TimelineActivity extends AppCompatActivity {
         if (requestCode ==  REQUEST_CODE &&  resultCode == RESULT_OK) {
             //Get data from the intent
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
-            //Update the recyclerview with the tweet
-            //Modify the data source of the tweets
             tweets.add(0,tweet);
             //Update the adapter
             adapter.notifyItemInserted(0);
@@ -143,7 +134,6 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
     public void onLogoutButton() {
-        // forget who's logged in
         TwitterApp.getRestClient(this).clearAccessToken();
         // navigate backwards to Login screen
         Intent i = new Intent(this, LoginActivity.class);

@@ -51,8 +51,6 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
         Tweet tweet = tweets.get(position);
         //Binding the tweet with the view holder
         holder.bind(tweet);
-
-
     }
 
     @Override
@@ -71,7 +69,7 @@ public class TweetsAdapter extends  RecyclerView.Adapter <TweetsAdapter.ViewHold
         TextView tvFavorite;
         ImageButton ibFavorite;
         ImageButton ibReply;
-        ImageButton getIbReply;
+
 
 
 
